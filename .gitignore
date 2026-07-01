@@ -1,0 +1,14 @@
+/target/
+/test/
+
+# Local benchmark/comparison artifacts
+/*.55pro
+/*.7z
+/*.zpaq
+/*.zpaqfranz
+/*.zstd
+/*.exe
+doc-vnext-*.txt
+
+# Temporary files
+*.tmp

@@ -1,0 +1,26 @@
+[package]
+name = "fivefivepro"
+version = "0.6.0"
+edition = "2021"
+license = "MIT"
+description = "5.5pro experimental lossless compressor for .55pro files"
+readme = "README.md"
+keywords = ["compression", "archive", "cli", "55pro"]
+categories = ["command-line-utilities", "compression"]
+
+[lib]
+name = "fivefivepro"
+path = "src/lib.rs"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"
+panic = "abort"
+
+[profile.dev]
+panic = "unwind"
+
+[[bin]]
+name = "fivefivepro"
+path = "src/main.rs"
