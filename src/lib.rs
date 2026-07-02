@@ -1,4 +1,4 @@
-//! Native Rust implementation of the 5.5pro `.55pro` format.
+//! Native Rust implementation of the 55pro `.55pro` format.
 //!
 //! The crate has no third-party dependencies. It includes the block codec,
 //! CRC32 verification, a bounded multithreaded block pipeline, and the optional

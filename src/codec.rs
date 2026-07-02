@@ -1542,7 +1542,7 @@ mod tests {
     #[test]
     fn roundtrips_empty_and_small() {
         roundtrip(b"", 5, 1);
-        roundtrip(b"hello 5.5pro", 5, 1);
+        roundtrip(b"hello 55pro", 5, 1);
     }
 
     #[test]

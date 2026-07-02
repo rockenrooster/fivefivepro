@@ -1,6 +1,4 @@
 .gitignore
-bin/5.5pro
-bin/5.5pro.cmd
 bin/55pro
 bin/55pro.cmd
 Cargo.lock

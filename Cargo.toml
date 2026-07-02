@@ -3,7 +3,7 @@ name = "fivefivepro"
 version = "0.6.0"
 edition = "2021"
 license = "MIT"
-description = "5.5pro experimental lossless compressor for .55pro files"
+description = "55pro experimental lossless compressor for .55pro files"
 readme = "README.md"
 keywords = ["compression", "archive", "cli", "55pro"]
 categories = ["command-line-utilities", "compression"]
@@ -22,5 +22,5 @@ panic = "abort"
 panic = "unwind"
 
 [[bin]]
-name = "fivefivepro"
+name = "55pro"
 path = "src/main.rs"

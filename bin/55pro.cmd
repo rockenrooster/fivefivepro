@@ -1,2 +1,2 @@
 @echo off
-%~dp0\..\target\release\fivefivepro.exe %*
+%~dp0\..\target\release\55pro.exe %*

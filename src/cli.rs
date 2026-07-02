@@ -47,7 +47,7 @@ struct InfoArgs {
 }
 
 fn usage() -> &'static str {
-    "5.5pro Rust compressor\n\nUsage:\n  55pro compress|c <input> [output.55pro] [options]\n  55pro decompress|d|x <input.55pro> [output] [options]\n  55pro test|t <input.55pro> [options]\n  55pro info|i <input.55pro> [--deep] [options]\n\nCommon options:\n  -T, --threads <0-1024|auto>   Worker threads; default 0/auto uses CPU count\n\nCompress options:\n  -l, --level <0-9>             Compression level, default 5\n  -b, --block-size <size>       Block size, default 1m; try 4m for repetitive data\n  -f, --force                   Accepted for compatibility; overwrite is default\n      --no-overwrite            Refuse to replace an existing output\n\nDecompress options:\n  -f, --force                   Accepted for compatibility; overwrite is default\n      --no-overwrite            Refuse to replace existing output/merge directory\n      --no-verify               Skip outer CRC verification\n\nOther:\n  -h, --help                    Show this help\n  -V, --version                 Show version"
+    "55pro Rust compressor\n\nUsage:\n  55pro compress|c <input> [output.55pro] [options]\n  55pro decompress|d|x <input.55pro> [output] [options]\n  55pro test|t <input.55pro> [options]\n  55pro info|i <input.55pro> [--deep] [options]\n\nCommon options:\n  -T, --threads <0-1024|auto>   Worker threads; default 0/auto uses CPU count\n\nCompress options:\n  -l, --level <0-9>             Compression level, default 5\n  -b, --block-size <size>       Block size, default 1m; try 4m for repetitive data\n  -f, --force                   Accepted for compatibility; overwrite is default\n      --no-overwrite            Refuse to replace an existing output\n\nDecompress options:\n  -f, --force                   Accepted for compatibility; overwrite is default\n      --no-overwrite            Refuse to replace existing output/merge directory\n      --no-verify               Skip outer CRC verification\n\nOther:\n  -h, --help                    Show this help\n  -V, --version                 Show version"
 }
 
 fn command_help(command: &str) -> &'static str {
@@ -666,7 +666,7 @@ fn run_result(argv: Vec<String>) -> Result<i32> {
         return Ok(0);
     }
     if matches!(args[0].as_str(), "-V" | "--version" | "version") {
-        println!("5.5pro {VERSION}");
+        println!("55pro {VERSION}");
         return Ok(0);
     }
 

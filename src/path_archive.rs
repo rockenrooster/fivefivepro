@@ -52,9 +52,7 @@ fn put_u64_le(out: &mut Vec<u8>, value: u64) {
 
 fn read_u32_at(data: &[u8], pos: &mut usize, what: &str) -> Result<u32> {
     if *pos + 4 > data.len() {
-        return err(format!(
-            "truncated 5.5pro path archive while reading {what}"
-        ));
+        return err(format!("truncated 55pro path archive while reading {what}"));
     }
     let value = u32::from_le_bytes([data[*pos], data[*pos + 1], data[*pos + 2], data[*pos + 3]]);
     *pos += 4;
@@ -63,9 +61,7 @@ fn read_u32_at(data: &[u8], pos: &mut usize, what: &str) -> Result<u32> {
 
 fn read_u64_at(data: &[u8], pos: &mut usize, what: &str) -> Result<u64> {
     if *pos + 8 > data.len() {
-        return err(format!(
-            "truncated 5.5pro path archive while reading {what}"
-        ));
+        return err(format!("truncated 55pro path archive while reading {what}"));
     }
     let value = u64::from_le_bytes([
         data[*pos],
@@ -343,16 +339,16 @@ fn manifest_json(root_name: &str, entries: &[Entry]) -> String {
 
 fn read_payload(data: &[u8]) -> Result<(String, Vec<Entry>, Vec<u8>)> {
     if !data.starts_with(PATH_ARCHIVE_MAGIC) {
-        return err("not a 5.5pro path archive payload");
+        return err("not a 55pro path archive payload");
     }
     let mut pos = PATH_ARCHIVE_MAGIC.len();
     if data.len() < pos + PATH_HEADER_SIZE {
-        return err("truncated 5.5pro path archive header");
+        return err("truncated 55pro path archive header");
     }
     let version = data[pos];
     pos += 1;
     if version != PATH_ARCHIVE_VERSION {
-        return err(format!("unsupported 5.5pro path archive version {version}"));
+        return err(format!("unsupported 55pro path archive version {version}"));
     }
     let manifest_len = read_u64_at(data, &mut pos, "manifest length")?;
     let body_len = read_u64_at(data, &mut pos, "data length")?;
@@ -370,30 +366,30 @@ fn read_payload(data: &[u8]) -> Result<(String, Vec<Entry>, Vec<u8>)> {
         .checked_add(body_len)
         .ok_or_else(|| Pro55Error::new("path archive length overflow"))?;
     if end_manifest > data.len() || end_body > data.len() {
-        return err("truncated 5.5pro path archive payload");
+        return err("truncated 55pro path archive payload");
     }
     if end_body != data.len() {
-        return err("trailing data inside 5.5pro path archive payload");
+        return err("trailing data inside 55pro path archive payload");
     }
 
     let manifest_bytes = &data[pos..end_manifest];
     let body = data[end_manifest..end_body].to_vec();
     if crc32(manifest_bytes) != manifest_crc {
-        return err("5.5pro path archive manifest CRC check failed");
+        return err("55pro path archive manifest CRC check failed");
     }
     if crc32(&body) != body_crc {
-        return err("5.5pro path archive data CRC check failed");
+        return err("55pro path archive data CRC check failed");
     }
 
     let doc = parse_json(manifest_bytes)?;
     let object = doc
         .as_object()
-        .ok_or_else(|| Pro55Error::new("invalid 5.5pro path archive manifest"))?;
+        .ok_or_else(|| Pro55Error::new("invalid 55pro path archive manifest"))?;
     if object.get("format").and_then(JsonValue::as_str) != Some("5.5pro-path-archive") {
-        return err("unsupported 5.5pro path archive manifest");
+        return err("unsupported 55pro path archive manifest");
     }
     if object.get("version").and_then(JsonValue::as_i64) != Some(i64::from(PATH_ARCHIVE_VERSION)) {
-        return err("unsupported 5.5pro path archive manifest");
+        return err("unsupported 55pro path archive manifest");
     }
     let root_name = object
         .get("root_name")
@@ -403,7 +399,7 @@ fn read_payload(data: &[u8]) -> Result<(String, Vec<Entry>, Vec<u8>)> {
     let entries_json = object
         .get("entries")
         .and_then(JsonValue::as_array)
-        .ok_or_else(|| Pro55Error::new("5.5pro path archive manifest has no entry list"))?;
+        .ok_or_else(|| Pro55Error::new("55pro path archive manifest has no entry list"))?;
     let mut entries = Vec::new();
     for value in entries_json {
         entries.push(entry_from_json(value, &body)?);
@@ -414,15 +410,15 @@ fn read_payload(data: &[u8]) -> Result<(String, Vec<Entry>, Vec<u8>)> {
 fn entry_from_json(value: &JsonValue, body: &[u8]) -> Result<Entry> {
     let obj = value
         .as_object()
-        .ok_or_else(|| Pro55Error::new("invalid 5.5pro path archive entry"))?;
+        .ok_or_else(|| Pro55Error::new("invalid 55pro path archive entry"))?;
     let typ = obj
         .get("type")
         .and_then(JsonValue::as_str)
-        .ok_or_else(|| Pro55Error::new("invalid entry type in 5.5pro path archive"))?;
+        .ok_or_else(|| Pro55Error::new("invalid entry type in 55pro path archive"))?;
     let path = obj
         .get("path")
         .and_then(JsonValue::as_str)
-        .ok_or_else(|| Pro55Error::new("invalid entry path in 5.5pro path archive"))?
+        .ok_or_else(|| Pro55Error::new("invalid entry path in 55pro path archive"))?
         .to_string();
     validate_storable_path(&path)?;
     let mode_raw = int_field(obj.get("mode"), "mode")?;
@@ -449,7 +445,7 @@ fn entry_from_json(value: &JsonValue, body: &[u8]) -> Result<Entry> {
                 .checked_add(size)
                 .ok_or_else(|| Pro55Error::new("file entry range overflow"))?;
             if end > body.len() {
-                return err("file entry exceeds 5.5pro path archive data section");
+                return err("file entry exceeds 55pro path archive data section");
             }
             let chunk = &body[offset..end];
             if crc32(chunk) != crc {
@@ -464,7 +460,7 @@ fn entry_from_json(value: &JsonValue, body: &[u8]) -> Result<Entry> {
                 crc32: crc,
             })
         }
-        _ => err("unknown entry type in 5.5pro path archive"),
+        _ => err("unknown entry type in 55pro path archive"),
     }
 }
 
@@ -613,7 +609,7 @@ pub fn extract_path_archive(
             .checked_add(size)
             .ok_or_else(|| Pro55Error::new("file entry range overflow"))?;
         if end > body.len() {
-            return err("file entry exceeds 5.5pro path archive data section");
+            return err("file entry exceeds 55pro path archive data section");
         }
         let chunk = &body[offset..end];
         atomic_write(&dest, chunk)?;

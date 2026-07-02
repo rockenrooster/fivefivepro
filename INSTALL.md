@@ -10,7 +10,6 @@ Run from the source tree:
 
 ```bash
 ./bin/55pro --version
-./bin/5.5pro --version
 ```
 
 Compression, decompression, test, and deep info use `-T 0` auto/max threads by
@@ -30,6 +29,5 @@ make install
 Or manually:
 
 ```bash
-install -m 0755 target/release/fivefivepro /usr/local/bin/55pro
-ln -sf /usr/local/bin/55pro /usr/local/bin/5.5pro
+install -m 0755 target/release/55pro /usr/local/bin/55pro
 ```

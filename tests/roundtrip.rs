@@ -126,14 +126,14 @@ fn directory_payload_roundtrip() {
 
 #[test]
 fn cli_smoke_roundtrip_when_binary_is_available() {
-    let Some(bin) = option_env!("CARGO_BIN_EXE_fivefivepro") else {
+    let Some(bin) = option_env!("CARGO_BIN_EXE_55pro") else {
         return;
     };
     let root = unique_temp_dir("cli");
     let src = root.join("sample.bin");
     let arc = root.join("sample.bin.55pro");
     let out = root.join("sample.out");
-    fs::write(&src, b"5.5pro Rust CLI roundtrip\n".repeat(1000)).unwrap();
+    fs::write(&src, b"55pro Rust CLI roundtrip\n".repeat(1000)).unwrap();
     fs::write(&arc, b"old archive").unwrap();
     assert!(Command::new(bin)
         .args([

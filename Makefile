@@ -11,8 +11,7 @@ test:
 
 install: build
 	install -d "$(BINDIR)"
-	install -m 0755 target/release/fivefivepro "$(BINDIR)/55pro"
-	ln -sf "$(BINDIR)/55pro" "$(BINDIR)/5.5pro"
+	install -m 0755 target/release/55pro "$(BINDIR)/55pro"
 
 clean:
 	cargo clean

@@ -1,4 +1,0 @@
-#!/usr/bin/env sh
-# Wrapper for source-tree builds. Run `cargo build --release` first.
-DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-exec "$DIR/../target/release/fivefivepro" "$@"

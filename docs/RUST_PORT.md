@@ -7,7 +7,7 @@ Implementation shape:
 
 - native worker threads
 - Rust library API exposed through `fivefivepro`
-- CLI binaries are `55pro` and `5.5pro`
+- CLI binary is `55pro`
 - no third-party Rust dependencies
 - internal JSON parser for the folder manifest format
 

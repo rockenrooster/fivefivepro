@@ -1,4 +1,4 @@
-# 5.5pro `.55pro` format, versions 1 and 3
+# 55pro `.55pro` format, versions 1 and 3
 
 All multi-byte integers are little-endian.
 

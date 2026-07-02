@@ -1,6 +1,6 @@
-# 5.5pro Rust
+# 55pro Rust
 
-This is the Rust implementation of the experimental **5.5pro** lossless
+This is the Rust implementation of the experimental **55pro** lossless
 compressor and `.55pro` file format.
 
 This crate is the native Rust engine and uses only the Rust standard library.
@@ -27,21 +27,19 @@ cargo build --release
 The compiled Rust binary is:
 
 ```bash
-./target/release/fivefivepro
+./target/release/55pro
 ```
 
-Source-tree wrappers are included so you can use the shorter CLI names after building:
+The source-tree wrapper uses the same command name after building:
 
 ```bash
 ./bin/55pro --version
-./bin/5.5pro --version
 ```
 
-For a system install, copy the compiled binary under either CLI name:
+For a system install, copy the compiled binary under the `55pro` CLI name:
 
 ```bash
-install -m 0755 target/release/fivefivepro /usr/local/bin/55pro
-ln -sf /usr/local/bin/55pro /usr/local/bin/5.5pro
+install -m 0755 target/release/55pro /usr/local/bin/55pro
 ```
 
 ## Test
@@ -116,7 +114,7 @@ Refuse overwriting an existing output:
 | `8` | all current methods | aggressive | ratio over speed |
 | `9` | all current methods | maximum | best ratio in this implementation |
 
-5.5pro chooses the smallest enabled representation per block. Incompressible
+55pro chooses the smallest enabled representation per block. Incompressible
 blocks are stored as `raw`, even at high levels.
 
 The default block size remains 1 MiB. `--block-size 4m` can improve ratio on
