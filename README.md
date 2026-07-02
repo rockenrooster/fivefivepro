@@ -3,8 +3,7 @@
 This is the Rust implementation of the experimental **5.5pro** lossless
 compressor and `.55pro` file format.
 
-The Python implementation is now treated as the v0.3 reference prototype. This
-crate is the native-code port intended to become the production engine. It currently uses only the Rust standard library.
+This crate is the native Rust engine and uses only the Rust standard library.
 
 ## Features
 
@@ -17,7 +16,6 @@ crate is the native-code port intended to become the production engine. It curre
 - per-block CRC32 and whole-payload CRC32 verification
 - LZ55X and HUF-LZ55X for compact long-match encoding without manual `.55pro.55pro` second passes
 - safe extraction checks for absolute paths, `..`, backslashes, NUL bytes, and symlink traversal
-- Python v0.3 compatibility fixtures in `tests/fixtures`
 
 ## Build
 
@@ -52,9 +50,9 @@ cargo test
 ```
 
 The test suite covers byte round trips, all compression levels, 1024-thread
-limit validation, Python v0.3 archive decoding, directory archive decoding,
-folder extraction, random and repetitive data, LZ55X, and a CLI file round trip
-when Cargo exposes the test binary.
+limit validation, directory archive decoding, folder extraction, random and
+repetitive data, LZ55X, and a CLI file round trip when Cargo exposes the test
+binary.
 
 ## Usage
 
@@ -126,20 +124,17 @@ block costs more work.
 
 ## Compatibility status
 
-The Rust decoder reads `.55pro` version-1 archives from the Python v0.3
-implementation. Archives using `lz55x` or `huf-lz55x` are written as v3 and
-require a v0.6+ compatible decoder. The path archive layer still uses a JSON
-manifest; Rust writes a compact JSON manifest and computes the manifest CRC over
-the exact bytes stored in each archive, so Rust and Python payloads can be
-decoded without requiring byte-identical manifest serialization.
+The Rust decoder reads `.55pro` version-1 archives. Archives using `lz55x` or
+`huf-lz55x` are written as v3 and require a v0.6+ compatible decoder. The path
+archive layer uses a JSON manifest and computes the manifest CRC over the exact
+bytes stored in each archive.
 
 ## Current production notes
 
-This port removes the Python GIL limitation and uses native worker threads. It
-still keeps the simple v1 design of reading the full input to compute the
-container header CRC and original size before writing the archive. A future v2
-format could add a streaming footer or seek-back header mode for very large
-inputs.
+This build uses native worker threads. It still keeps the simple v1 design of
+reading the full input to compute the container header CRC and original size
+before writing the archive. A future v2 format could add a streaming footer or
+seek-back header mode for very large inputs.
 
 Non-UTF-8 path names are rejected in folder mode because the v1 path archive
 manifest is UTF-8 JSON.

@@ -10,6 +10,7 @@
 - Added elapsed time and throughput metrics to compression, decompression, extraction, and test summaries.
 - Reduced duplicate LZ work, raw-block copies, Huffman sizing scans, decompression copy loops, and small worker-batch churn.
 - Improved folder pack/extract memory behavior by avoiding per-file temporary buffers and duplicate payload parsing.
+- Removed legacy fixture files from the test suite.
 - Cleaned hot paths and warning issues so `cargo clippy -- -D warnings` can pass.
 
 ## 0.4.0
@@ -18,5 +19,4 @@
 - Preserved the `.55pro` v1 outer container and current method IDs.
 - Added native OS-thread block compression/decompression with `-T 0..1024`.
 - Added dependency-free CRC32, RLE, LZ55, canonical Huffman, and path archive code.
-- Added Python v0.3 compatibility fixtures.
 - Kept overwrite-by-default behavior with `--no-overwrite` refusal mode.

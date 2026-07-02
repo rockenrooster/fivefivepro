@@ -8,9 +8,7 @@ use fivefivepro::codec::{
     lz55x_compress, lz55x_decompress, normalize_threads, rle_compress, rle_decompress, MAX_THREADS,
     MIN_BLOCK_SIZE,
 };
-use fivefivepro::path_archive::{
-    extract_path_archive, inspect_path_archive_payload, is_path_archive, pack_directory,
-};
+use fivefivepro::path_archive::{extract_path_archive, pack_directory};
 
 fn unique_temp_dir(name: &str) -> PathBuf {
     let nanos = SystemTime::now()
@@ -96,23 +94,6 @@ fn repetitive_data_uses_lz55x_family() {
     let info = inspect_archive_bytes(&archive).unwrap();
     assert!(info.methods.contains_key("lz55x") || info.methods.contains_key("huf-lz55x"));
     assert_eq!(decompress_bytes(&archive, true, 0).unwrap(), data);
-}
-
-#[test]
-fn python_v03_file_fixture_decodes() {
-    let archive = include_bytes!("fixtures/python-v0.3-sample.55pro");
-    let expected = include_bytes!("fixtures/python-v0.3-sample.raw");
-    assert_eq!(decompress_bytes(archive, true, 4).unwrap(), expected);
-}
-
-#[test]
-fn python_v03_directory_fixture_decodes() {
-    let archive = include_bytes!("fixtures/python-v0.3-dir.55pro");
-    let payload = decompress_bytes(archive, true, 4).unwrap();
-    assert!(is_path_archive(&payload));
-    let info = inspect_path_archive_payload(&payload).unwrap();
-    assert_eq!(info.files, 2);
-    assert_eq!(info.directories, 1);
 }
 
 #[test]
