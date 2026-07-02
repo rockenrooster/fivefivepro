@@ -2,6 +2,7 @@
 
 ## 0.6.0
 
+- Added README attribution that the compression algorithm was made by GPT-5.5 Pro (Extended).
 - Added v3 block methods `lz55x` and `huf-lz55x` for compact long-match length encoding.
 - Kept v1 archive decode compatibility and emit v3 only when method 6/7 is used.
 - Removed avoidable block and compressed-payload copies in the block pipeline.

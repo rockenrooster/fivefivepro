@@ -4,6 +4,7 @@ This is the Rust implementation of the experimental **5.5pro** lossless
 compressor and `.55pro` file format.
 
 This crate is the native Rust engine and uses only the Rust standard library.
+The compression algorithm was made by GPT-5.5 Pro (Extended).
 
 ## Features
 
